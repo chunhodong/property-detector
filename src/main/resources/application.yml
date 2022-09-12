@@ -1,20 +1,12 @@
 spring:
   profiles:
-    active: min
+    active: dev
 ---
 ki:
   detector:
     hibernate-ddlauto-deactive: true
-    general-deactive-properties:
-      key[0]: 123
-      value[0]: 23
-      key[1]: ab
-      value[1]: gaw
-
-
 spring:
-  profiles: min
-  tmp: kad
+  profiles: dev
   servlet:
     multipart:
       maxFileSize: 100MB
@@ -25,27 +17,7 @@ spring:
   jpa:
     hibernate:
       dialect: org.hibernate.dialect.PostgreSQLDialect
-      ddl-auto: none
-      show_sql: false
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-    show-sql: false
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
----
-spring:
-  profiles: mad
-  tmp: kadv
-  servlet:
-    multipart:
-      maxFileSize: 100MB
-      maxRequestSize: 100MB
-    hikari:
-      connection-timeout: 20000
-      maximum-pool-size: 100
-  jpa:
-    hibernate:
-      dialect: org.hibernate.dialect.PostgreSQLDialect
-      ddl-auto: none
+      ddl-auto: update
       show_sql: false
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
