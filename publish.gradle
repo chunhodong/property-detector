@@ -1,0 +1,15 @@
+ext {
+    PUBLISH_GROUP_ID = 'io.github.chunhodong'
+    PUBLISH_VERSION = '0.0.1'
+    PUBLISH_ARTIFACT_ID = 'property-detector'
+    PUBLISH_DESCRIPTION = 'SpringBoot application property detect and break'
+    PUBLISH_URL = 'https://github.com/chunhodong/property-detector'
+    PUBLISH_LICENSE_NAME = 'GNU License'
+    PUBLISH_LICENSE_URL = 'https://github.com/chunhodong/property-detector/blob/master/License'
+    PUBLISH_DEVELOPER_ID = 'chunhodong'
+    PUBLISH_DEVELOPER_NAME = 'chunhodong'
+    PUBLISH_DEVELOPER_EMAIL = 'yhms4432@naver.com'
+    PUBLISH_SCM_CONNECTION = 'scm:git:github.com/chunhodong/property-detector.git'
+    PUBLISH_SCM_DEVELOPER_CONNECTION = 'scm:git:ssh://github.com:chunhodong/property-detector.git'
+    PUBLISH_SCM_URL = 'https://github.com/chunhodong/property-detector/tree/master'
+}
