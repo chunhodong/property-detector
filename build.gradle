@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'io.github.ki'
-version = '0.0.1'
+version = '0.0.3'
 sourceCompatibility = '11'
 
 repositories {
@@ -19,27 +19,18 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-java {
-	withSourcesJar()
-	withJavadocJar()
-}
-
 publishing {
 	publications {
 		mavenJava(MavenPublication) {
-			groupId = 'io.github.ki'
-			artifactId = 'library'
-			version = '0.0.1'
 
 			from components.java
+			groupId = 'com.github.chunhodong'
+			artifactId = 'library'
+			version = '0.0.3'
+
 		}
 	}
 }
-wrapper {
-	gradleVersion = "7.5"
-	distributionType = Wrapper.DistributionType.ALL
-}
-
 
 tasks.named('test') {
 	useJUnitPlatform()
