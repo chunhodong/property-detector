@@ -2,11 +2,10 @@ plugins {
 	id 'org.springframework.boot' version '2.7.3'
 	id 'io.spring.dependency-management' version '1.0.13.RELEASE'
 	id 'java'
-	id 'maven-publish'
 }
 
-group = 'com.github.chunhodong'
-version = '0.0.1'
+group = 'io.github.chunhodong'
+version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
 repositories {
@@ -16,24 +15,6 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-}
-
-java {
-	withSourcesJar()
-	withJavadocJar()
-}
-
-publishing {
-	publications {
-		maven(MavenPublication) {
-			from components.java
-		}
-	}
-}
-
-wrapper {
-	gradleVersion = "7.5"
-	distributionType = Wrapper.DistributionType.ALL
 }
 
 tasks.named('test') {
