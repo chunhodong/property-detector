@@ -25,7 +25,11 @@ java {
 
 publishing {
 	publications {
-		maven(MavenPublication) {
+		mavenJava(MavenPublication) {
+			groupId = 'io.github.ki'
+			artifactId = 'library'
+			version = '0.0.1'
+
 			from components.java
 		}
 	}
