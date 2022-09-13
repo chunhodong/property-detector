@@ -30,6 +30,10 @@ publishing {
 		}
 	}
 }
+wrapper {
+	gradleVersion = "7.5"
+	distributionType = Wrapper.DistributionType.ALL
+}
 
 
 tasks.named('test') {
