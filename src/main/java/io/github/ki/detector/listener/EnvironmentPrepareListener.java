@@ -1,11 +1,12 @@
 package io.github.ki.detector.listener;
 
-import io.github.ki.detector.DetectorParser;
+import io.github.ki.detector.parser.DetectorParser;
 import org.springframework.boot.context.event.ApplicationEnvironmentPreparedEvent;
 import org.springframework.boot.env.OriginTrackedMapPropertySource;
 import org.springframework.context.ApplicationListener;
 import org.springframework.core.env.ConfigurableEnvironment;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -15,22 +16,33 @@ public class EnvironmentPrepareListener implements ApplicationListener<Applicati
         ConfigurableEnvironment environment = event.getEnvironment();
 
 
-        OriginTrackedMapPropertySource trackedMapPropertySource = (OriginTrackedMapPropertySource) environment.getPropertySources()
-                .stream()
-                .filter(propertySource -> propertySource instanceof OriginTrackedMapPropertySource)
-                .findFirst().orElse(null);
 
+        Map<String,Object> propertyMap = getPropertySource(environment);
 
-        Map<String,Object> trackedPropertyMap = trackedMapPropertySource.getSource();
-        Map<String, List<String>> map = DetectorParser.parsePropertyMap(trackedPropertyMap);
-        if(map == null || map.isEmpty())return;;
+        if(propertyMap.isEmpty())return;
 
-        map.entrySet().stream().forEach(e -> {
-            Object object = trackedPropertyMap.get(e.getKey());
+        Map<String, List<String>> detectedPropertyMap = DetectorParser.parsePropertyMap(propertyMap);
+
+        if(detectedPropertyMap.isEmpty())return;
+
+        detectedPropertyMap.entrySet().stream().forEach(e -> {
+            Object object = propertyMap.get(e.getKey());
             if(object != null){
                 boolean isContain = e.getValue().stream().anyMatch(s -> s.equals(object.toString()));
                 if(isContain)throw new IllegalArgumentException("not allowed ddl-auto property");
             }
         });
+    }
+
+    private Map getPropertySource(ConfigurableEnvironment environment){
+
+        return environment.getPropertySources()
+                .stream()
+                .filter(propertySource -> propertySource instanceof OriginTrackedMapPropertySource)
+                .findFirst()
+                .map(propertySource -> (Map)propertySource.getSource())
+                .orElse(Collections.EMPTY_MAP);
+
+
     }
 }

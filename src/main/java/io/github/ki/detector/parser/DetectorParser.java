@@ -1,8 +1,9 @@
-package io.github.ki.detector;
+package io.github.ki.detector.parser;
 
 import io.github.ki.detector.enums.DetectorConstant;
 import org.springframework.boot.origin.OriginTrackedValue;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +20,7 @@ public class DetectorParser {
                 .filter(e -> e.getKey().indexOf(DetectorConstant.PREFIX.getValue()) != -1)
                 .collect(Collectors.toMap(e->e.getKey(),e->e.getValue()));
 
-        if(filteredMap.isEmpty())return null;
+        if(filteredMap.isEmpty())return Collections.EMPTY_MAP;
         Map<String, List<String>> result = new HashMap<>();
         parseHibernateSyntax(filteredMap,result);
 
