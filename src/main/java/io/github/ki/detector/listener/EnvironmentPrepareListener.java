@@ -5,36 +5,37 @@ import org.springframework.boot.context.event.ApplicationEnvironmentPreparedEven
 import org.springframework.boot.env.OriginTrackedMapPropertySource;
 import org.springframework.context.ApplicationListener;
 import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.core.env.MutablePropertySources;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 public class EnvironmentPrepareListener implements ApplicationListener<ApplicationEnvironmentPreparedEvent> {
     @Override
     public void onApplicationEvent(ApplicationEnvironmentPreparedEvent event) {
         ConfigurableEnvironment environment = event.getEnvironment();
-
+        if(environment.getPropertySources() == null)return;
 
 
         Map<String,Object> propertyMap = getPropertySource(environment);
 
         if(propertyMap.isEmpty())return;
 
-        Map<String, List<String>> detectedPropertyMap = DetectorParser.parsePropertyMap(propertyMap);
+        Map<String, String> detectedPropertyMap = DetectorParser.parsePropertyMap(propertyMap);
 
         if(detectedPropertyMap.isEmpty())return;
 
-        detectedPropertyMap.entrySet().stream().forEach(e -> {
-            Object object = propertyMap.get(e.getKey());
-            if(object != null){
-                boolean isContain = e.getValue().stream().anyMatch(s -> s.equals(object.toString()));
-                if(isContain)throw new IllegalArgumentException("not allowed ddl-auto property");
+        detectedPropertyMap.entrySet().stream().forEach(entry -> {
+            String propertyValue = (String) propertyMap.get(entry.getKey());
+            if(propertyValue != null){
+                if(entry.getValue().equals(propertyValue))
+                    throw new IllegalArgumentException("not allowed spring.jpa.hibernate.ddl-auto property value=create");
             }
         });
     }
 
     private Map getPropertySource(ConfigurableEnvironment environment){
+        MutablePropertySources mutablePropertySources = environment.getPropertySources();
 
         return environment.getPropertySources()
                 .stream()
@@ -45,4 +46,5 @@ public class EnvironmentPrepareListener implements ApplicationListener<Applicati
 
 
     }
+
 }

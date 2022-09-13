@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public class DetectorParser {
 
 
-    public static Map<String, List<String>> parsePropertyMap(Map<String,Object> map){
+    public static Map<String, String> parsePropertyMap(Map<String,Object> map){
 
 
         Map<String,Object> filteredMap = map.entrySet()
@@ -21,18 +21,18 @@ public class DetectorParser {
                 .collect(Collectors.toMap(e->e.getKey(),e->e.getValue()));
 
         if(filteredMap.isEmpty())return Collections.EMPTY_MAP;
-        Map<String, List<String>> result = new HashMap<>();
+        Map<String, String> result = new HashMap<>();
         parseHibernateSyntax(filteredMap,result);
 
         return result;
     }
 
-    private static void parseHibernateSyntax( Map<String,Object> srcMap,Map<String, List<String>> descMap){
+    private static void parseHibernateSyntax( Map<String,Object> srcMap,Map<String, String> descMap){
         OriginTrackedValue originTrackedValue = OriginTrackedValue.of(srcMap.get(DetectorConstant.HIBERNATE.getProperty()));
 
         if(originTrackedValue == null)return;
         if(originTrackedValue.getValue().toString() != Boolean.TRUE.toString())return;
-        descMap.put("spring.jpa.hibernate.ddl-auto",List.of("create"));
+        descMap.put("spring.jpa.hibernate.ddl-auto","create");
     }
 
 }
