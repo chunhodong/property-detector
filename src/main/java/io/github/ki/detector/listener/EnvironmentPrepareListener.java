@@ -6,7 +6,6 @@ import org.springframework.boot.env.OriginTrackedMapPropertySource;
 import org.springframework.context.ApplicationListener;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.MutablePropertySources;
-
 import java.util.Collections;
 import java.util.Map;
 

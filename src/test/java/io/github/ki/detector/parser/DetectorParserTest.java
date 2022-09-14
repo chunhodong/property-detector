@@ -1,17 +1,9 @@
 package io.github.ki.detector.parser;
 
-import io.github.ki.detector.enums.DetectorConstant;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.origin.OriginTrackedValue;
-
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class DetectorParserTest {
 
